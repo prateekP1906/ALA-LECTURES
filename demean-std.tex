@@ -1,0 +1,292 @@
+\documentclass[12pt]{beamer}
+\usetheme{moloch}
+
+\usepackage{amsmath,amscd}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage[dvipsnames]{xcolor}
+
+\setbeamercolor{background canvas}{bg=black}
+\setbeamercolor{normal text}{fg=white}
+
+\setmonofont{DejaVu Sans Mono}
+
+% Set the title bar to black background with white text
+\setbeamercolor{frametitle}{bg=black, fg=white}
+
+% Ensure other structural elements (bullets, etc.) are visible
+\setbeamercolor{structure}{fg=white}
+
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{DejaVu Sans Mono}
+\setmathfont{STIXTwoMath-Regular.otf}
+%\setmathfont{STIX Two Math}
+
+
+% Define colors for syntax highlighting
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codecoffee}{rgb}{0.75,0.6,0.3}
+\definecolor{question}{rgb}{1.0,0.75,0.1}
+\definecolor{lightblue}{rgb}{0.55,0.75,0.9}
+\definecolor{yellow}{rgb}{1.0, 1.0, 0.0}
+\definecolor{codecomment}{rgb}{0.97, 0.74, 0.4}
+\definecolor{codepy}{rgb}{0.9, 0.85, 0.85} %{#F8BC65}
+\definecolor{funcColor}{rgb}{0.47, 0.6, 0.8}
+\definecolor{midgray}{rgb}{0.4, 0.4, 0.3}
+\definecolor{indexwhite}{rgb}{0.9, 0.9, 0.9}
+
+\newcommand{\FrameTitle}[2]{\frametitle{#1 \hfill \small\textnormal{\textcolor{midgray}{#2}}}}
+\newcommand{\snl}{\vspace*{4pt}\\}
+\newcommand{\nl}{\vspace*{1em}\\}
+\newcommand{\vsp}{\vspace*{1em}}
+\newcommand{\SixPtVspace}{\vspace*{6pt}}
+
+\newcommand{\Quiz}[1]{{\large\textbf{\color{question}{#1}}}}
+\newcommand{\QuizQuestion}[1]{{\Large\textbf{\color{question}{#1}}}}
+
+\newcommand{\Matrix}[1]{\textbf{#1}}
+\newcommand{\Vector}[1]{\textbf{#1}}
+\newcommand{\MMat}[1]{\mathbf{#1}}
+\newcommand{\MVec}[1]{\mathbf{#1}}
+\newcommand{\Norm}[1]{\lVert {{#1}} \rVert}
+\newcommand{\NormBeta}[1]{\lVert \beta \mathbf{#1} \rVert}
+\newcommand{\NormConst}[1]{\lVert #1 \rVert}
+\newcommand{\Trans}{\text{\raisebox{0.5ex}{\scalebox{0.75}{T}}}}
+\newcommand{\abs}[1]{\lvert {#1} \rvert}
+\newcommand{\Avg}[1]{\mathbf{avg}{(\MVec{#1})}}
+\newcommand{\AvgVec}[1]{\mathbf{avg}{(\MVec{#1})}}
+\newcommand{\AvgDemeanedVec}[1]{\mathbf{avg}{(\tilde\MVec{#1})}}
+\newcommand{\DemeanedVec}[1]{\tilde\MVec{#1}}
+\newcommand{\Std}[1]{\mathbf{std}(\MVec{#1})}
+
+\begin{document}
+\title{\center{Applied Linear Algebra\\\vsp Standard Deviation\\}}
+
+\author{\center{Devi Prasad M \\ Manipal School of Information Sciences \\ Manipal \\}}
+\date{\center{September 2026}}
+\maketitle
+
+\begin{frame}\FrameTitle{De-meaned Vector}{Unit 1}
+    For any vector $\MVec{x} \in \mathbb{R}^n$, the \emph{mean} of its entries is
+    \[
+        \mathbf{avg}(\MVec{x}) = \frac{1}{n}\sum_{i=1}^{n} x_i
+    \]
+    and the associated \emph{de-meaned} vector is
+    \[
+        \DemeanedVec{x} = \MVec{x} - \AvgVec{x}\MVec{1}_n
+    \]
+
+    Notice $\AvgDemeanedVec{x} = 0$, that is, the mean
+    value of the entries of $\tilde{\MVec{x}}$ is zero.
+\end{frame}
+
+\begin{frame}\FrameTitle{De-meaned Vector}{Unit 1}
+    Let $\MVec{x} = (10, -2, 8, 23, 6, 75)$.
+
+    \vsp
+    Then $\Avg{x} = 20$ and the de-meaned vector is
+    \begin{align*}
+        \tilde{\MVec{x}} &= \MVec{(10, -2, 8, 23, 6, 75)} - \MVec{(20, 20, 20, 20, 20, 20)}\\[4pt]
+                            &=(10-20, -2-20, 8-20, 23-20, 6-20, 75-20)\\[4pt]
+                            &= (-10, -22, -12, 3, -14, 55)
+    \end{align*}
+
+    \vsp
+    The mean of the entries of $\tilde{\MVec{x}}$ is zero.
+\end{frame}
+
+\begin{frame}\FrameTitle{De-meaned Vector}{Unit 1}
+    \QuizQuestion{What is $\tilde{\MVec{x}}$ if all entries of $\MVec{x}$ are equal?}
+\end{frame}
+
+\begin{frame}\FrameTitle{Norm of a De-meaned Vector}{Unit 1}
+    Recall $\MVec{x} = (10, -2, 8, 23, 6, 75)$ and $\Avg{x} = 20$. \vspace*{4pt}\\
+    $\Norm{\MVec{x}} = \sqrt{100+4+64+529+36+5625} = \sqrt{6358} \approx 79.7371$.\vspace*{8pt}\\
+
+    \noindent\rule{\textwidth}{0.4pt}
+    \begin{align*}
+    \tilde{\MVec{x}} &= \MVec{(10, -2, 8, 23, 6, 75)} - \MVec{(20, 20, 20, 20, 20, 20)}\\[2pt]
+                            &= (-10, -22, -12, 3, -14, 55)
+    \end{align*}
+
+    Norm of the de-meaned vector $\tilde{\MVec{x}}$ is
+    \begin{align*}
+        \Norm{\tilde{\MVec{x}}} &= \sqrt{(-10)^2 + (-22)^2 + (-12)^2 + 3^2 + (-14)^2 + 55^2} \\[2pt]
+                        &= \sqrt{10^2 + 22^2 + 12^2 + 3^2 + 14^2 + 55^2}\\[2pt]
+                        &= \sqrt{100 + 484 + 144 + 9 + 196 + 3025} \\[2pt]
+                        &= \sqrt{3958} \\[2pt]
+                        &\approx 62.9126
+    \end{align*}
+\end{frame}
+
+\begin{frame}\FrameTitle{Standard Deviation}{Unit 1}
+    The \emph{standard deviation} of an $n$-vector $\MVec{x}$
+    is defined as the RMS value of the de-meaned vector $\MVec{x} - \Avg{x}\MVec{1}_n$:
+
+    \[
+        \begin{array}{rll}
+            \Std{\MVec{x}} &=& \sqrt{\dfrac{1}{n}\sum_{i=1}^{n} (x_i - \Avg{x})^2} \\[1.5em]
+            &=& \sqrt{\dfrac{(x_1-\Avg{x})^2 + \cdots + (x_n-\Avg{x})^2}{n}} \\[1.5em]
+            &=& \dfrac{\Norm{\tilde{\MVec{x}}}}{\sqrt{n}} \\[1.5em]
+            &=& \dfrac{\lVert\,\MVec{x} - ((\MVec{1}_n^{\Trans}\,\MVec{x})/{n}) \, \MVec{1}_n \,\rVert}{\sqrt{n}}
+        \end{array}
+    \]
+\end{frame}
+
+\begin{frame}\FrameTitle{Standard Deviation}{Unit 1}
+Consider our example
+\begin{align*}
+    \MVec{x} &= (10, -2, 8, 23, 6, 75)\\[4pt]
+    n &= 6\\[4pt]
+    \Avg{x} &= 20\\[4pt]
+    \tilde{\MVec{x}} &= (-10, -22, -12, 3, -14, 55)\\[4pt]
+    \Norm{\tilde{\MVec{x}}} &\approx 62.9126
+\end{align*}
+
+Now we can compute the standard deviation of $\MVec{x}$:
+\begin{align*}
+    \Std{\MVec{x}} &= \Norm{\tilde{\MVec{x}}}/\sqrt{n} \\[4pt]
+                   &= 62.9126/\sqrt{6} \\[4pt]
+                   &\approx 25.686
+\end{align*}
+\end{frame}
+
+\begin{frame}\FrameTitle{Standard Deviation}{Unit 1}
+Given two vectors $\MVec{x}$ and $\MVec{y}$,
+where the value of each entry of $\MVec{y}$ is
+$\Std{\MVec{x}}$,
+
+\begin{align*}
+    \MVec{x} &= (-10, -22, -12, 3, -14, 55), \ and \\[4pt]
+    \MVec{y} &= (25.686, 25.686, 25.686, 25.686, 25.686, 25.686),
+\end{align*}
+
+\QuizQuestion{what is $\Norm{\MVec{x}}$ and $\Norm{\MVec{y}}$?}
+\end{frame}
+
+\begin{frame}\FrameTitle{Standard Deviation - A ``Good'' Sample}{Unit 1}
+    \[
+        \text{Let} \ \MVec{x} = (10, 2, 9, 18, 6, 15, 12, 7, 11)
+    \]
+    \begin{align*}
+        \Avg{x} &= 10 \\[3pt]
+        \Norm{\MVec{x}} &= \sqrt{100 + 4 + 81 + 324 + 36 + 225 + 144 + 49 + 121} \\[3pt]
+                        &= \sqrt{1084} \approx 32.9242 \\[3pt]
+        \tilde{\MVec{x}} &= (0, -8, -1, 8, -4, 5, 2, -3, 1) \\[3pt]
+        \Norm{\tilde{\MVec{x}}} &= \sqrt{0+64+1+64+16+25+4+9+1}\\[3pt]
+                                   &= \sqrt{184} \approx 13.5647\\[3pt]
+        \Std{\MVec{x}} &= \dfrac{13.5647}{\sqrt{9}} = 4.522
+    \end{align*}
+\end{frame}
+
+\begin{frame}\FrameTitle{Standard Deviation}{Unit 1}
+    \begin{itemize}
+    \item The standard deviation of a vector is \textbf{zero} only
+            when all its entries are equal.
+    \item The standard deviation of a vector is \emph{small} when the
+            entries of the vector are nearly the same.
+    \end{itemize}
+
+    \vspace*{2em}
+    The standard deviation of a vector $\MVec{x}$ is useful when
+    the data set does not contain outliers, as it provides a more
+    accurate measure of the spread of the data.
+\end{frame}
+
+\begin{frame}\FrameTitle{Properties of Standard Deviation}{Unit 1}
+    Assume a vector $\MVec{x}$ and any number $a$.
+    \begin{itemize}
+        \item Adding a constant to every entry of a vector does not change its
+              standard deviation. \vspace*{4pt}\\
+            $\Std{\MVec{x} + {\mathit{a}}\,\MVec{1_{\mathit{n}}}} = \Std{\MVec{x}}$
+
+        \item[]
+
+        \item  Multiplying a vector by a scalar multiplies the standard
+               deviation by the absolute value of the scalar.\vspace*{4pt}\\
+            $\Std{\mathit{a}\,\MVec{x}} = \abs{a}\,\Std{\MVec{x}}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\FrameTitle{Standardization}{Unit 1}
+The \emph{standardization} of a vector $\MVec{x}$ is the vector
+\[
+    \MVec{z} = \dfrac{\MVec{x} - \Avg{\MVec{x}}\MVec{1}_n}{\Std{\MVec{x}}}
+             = \dfrac{\DemeanedVec{x}}{\Std{\MVec{x}}}
+\]
+
+\vsp
+$\MVec{z}$ is the \emph{standardized} version of $\MVec{x}$, and has the following properties:
+\begin{itemize}
+    \item $\Avg{\MVec{z}} = 0$
+    \item $\Std{\MVec{z}} = 1$
+\end{itemize}
+
+\vsp
+The entries of $\MVec{z}$ are called the $z$-scores associated with the
+original entries of $\MVec{x}$.
+\end{frame}
+
+
+\begin{frame}\FrameTitle{Correlation Coefficient}{Unit 1}
+    Let $\MVec{a}$ and $\MVec{b}$ be two $n$-vectors, with the
+    associated de-meaned vectors $\DemeanedVec{a}$ and $\DemeanedVec{b}$.
+    \[
+        \DemeanedVec{a} = \MVec{a} - \Avg{a}\mathbf{1},
+        \qquad\qquad
+        \DemeanedVec{b} = \MVec{b} - \Avg{b}\mathbf{1}
+    \]
+
+    The \emph{correlation coeficient} of $\DemeanedVec{a}$ and
+    $\DemeanedVec{b}$ is defined as
+    \[
+        \rho = \dfrac{\DemeanedVec{a}^{\Trans} \DemeanedVec{b}}
+        {\Norm{\DemeanedVec{a}} \Norm{\DemeanedVec{b}}}
+    \]
+    assuming that the de-meaned vectors are not $\mathbf{0}$.
+\end{frame}
+
+\begin{frame}\FrameTitle{Correlation Coefficient}{Unit 1}
+    It is clear from the definition of $\rho$ that it is
+    cos $\theta$, the angle between $\DemeanedVec{a}$ and
+    $\DemeanedVec{b}$.
+    \[
+        \rho = \angle (\DemeanedVec{a}, \DemeanedVec{b})
+    \]
+\end{frame}
+
+
+\begin{frame}\FrameTitle{Correlation Coefficient}{Unit 1}
+    \begin{itemize}
+        \item The correlation coefficient, $\rho$, tells us how the
+                entries in the two vectors vary together.
+        \item $-1 \le \rho \le 1$
+        \item If $\rho = 0$, the vectors are $uncorrelated$.
+        \item A vector with all entries equal is said to be
+                \emph{uncorrelated} with any vector.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}\FrameTitle{Correlation Coefficient}{Unit 1}
+    Define the standardized versions of $\MVec{a}$ and $\MVec{b}$.
+    \[
+        u = \DemeanedVec{a} / \Std{a}, \ and \ v = \DemeanedVec{b}/\Std{b}
+    \]
+
+    Then,
+    \[
+        \rho = {u^{\Trans} v}/{n}
+    \]
+\end{frame}
+
+\begin{frame}\FrameTitle{Correlation Coefficient}{Unit 1}
+\end{frame}
+
+\begin{frame}\FrameTitle{Correlation Coefficient}{Unit 1}
+\end{frame}
+
+
+\end{document}
